@@ -1,13 +1,39 @@
-name: 🚀 Deploy website on tag Release
+name: 🚀 Deploy website on tag Release with MD
 on:
   push:
     tags:
       - release/*
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  build-page:
+    name: ⚙️ Build page
     runs-on: ubuntu-latest
     steps:
+      - name: 🚚 Get code from repository
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Building web page
+        run: |
+          pip install mkdocs mkdocs-material
+          mkdocs build --site-dir "public/"
+
+      - name: 💾 Storing generated page for later usage
+        uses: actions/upload-artifact@v3
+        with: 
+          name: public-page
+          path: public
+          retention-days: 0
+
+  web-deploy:
+    name: 🎉 Deploy
+    needs: build-page
+    runs-on: ubuntu-latest
+    steps:
+    - name: ⬇️ Get latest code
+      uses: actions/download-artifact@v4
+      with:
+        name: my-artifact
+        path: ./public/
+
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
     
