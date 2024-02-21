@@ -28,24 +28,11 @@ jobs:
     needs: build-page
     runs-on: ubuntu-latest
     steps:
-    - name: 📁 Create directory if it doesn't exist
-      run: mkdir -p ./public/
-
     - name: ⬇️ Get generated page
       uses: actions/download-artifact@v3
       with:
         name: public-page
         path: ./public/
-
-       
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
-
-    - name: List working directory
-      run: ls -la
-
-    - name: List public
-      run: ls -la public
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
