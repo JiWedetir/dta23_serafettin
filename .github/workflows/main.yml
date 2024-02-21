@@ -1,5 +1,8 @@
-on: push
-name: 🚀 Deploy website on push
+name: 🚀 Deploy website on tag
+on:
+  push:
+    tags:
+      - release/*
 jobs:
   web-deploy:
     name: 🎉 Deploy
