@@ -28,6 +28,9 @@ jobs:
     needs: build-page
     runs-on: ubuntu-latest
     steps:
+    - name: 📁 Create directory if it doesn't exist
+      run: mkdir -p ./public/
+
     - name: ⬇️ Get latest code
       uses: actions/download-artifact@v3
       with:
